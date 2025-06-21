@@ -10,7 +10,7 @@ interface AuthContextType {
 
 export const AuthContext = React.createContext<AuthContextType>({
     authenticated: false,
-    me: {id: 0, email: ""},
+    me: {id: "", email: ""},
 });
 
 export function useAuthContext() {
