@@ -93,9 +93,12 @@ export function Landing() {
             <Button variant={'text'} onClick={() => navigate('/login')}>
               Login
             </Button>
+            {authenticated && (
             <Button variant={'outlined'} onClick={() => navigate('/listings')}>
               View Listings
             </Button>
+            )
+            }
           </Grid2>
         </Grid2>
         <Paper

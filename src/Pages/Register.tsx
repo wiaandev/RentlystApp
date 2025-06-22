@@ -37,11 +37,12 @@ export const Register = () => {
   };
   const form = useForm<FieldValues>({defaultValues});
 
-  const [mutate, isPending] = useMutation<RegisterMutation>(graphql`
+  const [mutate] = useMutation<RegisterMutation>(graphql`
     mutation RegisterMutation($input: UserRegistrationInput!){
       userRegistration(input: $input){
         user{
           firstName
+          isRenter
           lastName
           normalizedEmail
         }
@@ -57,6 +58,7 @@ export const Register = () => {
             email: data.email,
             confirmPassword: data.confirmPassword,
             firstName: data.firstName,
+            isRenter: data.isRenter,
             lastName: data.lastName,
             password: data.password,
             phoneNumber: value ?? '',
@@ -139,7 +141,7 @@ export const Register = () => {
                 value === form.getValues().password || 'Passwords do not match',
             }}
           />
-          <CheckboxWithLabel label='I want to list my place' name='isRenter' />
+          <CheckboxWithLabel control={form.control} label='I want to list my place' name='isRenter' />
         </Grid2>
         <Button type={'submit'} variant={'contained'}>
           Submit

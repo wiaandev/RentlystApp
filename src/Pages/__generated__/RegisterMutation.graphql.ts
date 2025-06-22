@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9d678da37bdaa2c400c2d5ea5c5283b4>>
+ * @generated SignedSource<<4d723b47f16f0aa3344024241fca77db>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type UserRegistrationRequestInput = {
   confirmPassword: string;
   email: string;
   firstName: string;
+  isRenter: boolean;
   lastName: string;
   password: string;
   phoneNumber: string;
@@ -27,6 +28,7 @@ export type RegisterMutation$data = {
   readonly userRegistration: {
     readonly user: {
       readonly firstName: string;
+      readonly isRenter: boolean;
       readonly lastName: string;
       readonly normalizedEmail: string | null | undefined;
     } | null | undefined;
@@ -63,10 +65,17 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "lastName",
+  "name": "isRenter",
   "storageKey": null
 },
 v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "lastName",
+  "storageKey": null
+},
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -98,7 +107,8 @@ return {
             "selections": [
               (v2/*: any*/),
               (v3/*: any*/),
-              (v4/*: any*/)
+              (v4/*: any*/),
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -134,6 +144,7 @@ return {
               (v2/*: any*/),
               (v3/*: any*/),
               (v4/*: any*/),
+              (v5/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -150,16 +161,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "678f9c22e6d22813fa66a7f41e107da1",
+    "cacheID": "879e7c05a710467c6312f90cd62c5170",
     "id": null,
     "metadata": {},
     "name": "RegisterMutation",
     "operationKind": "mutation",
-    "text": "mutation RegisterMutation(\n  $input: UserRegistrationInput!\n) {\n  userRegistration(input: $input) {\n    user {\n      firstName\n      lastName\n      normalizedEmail\n      id\n    }\n  }\n}\n"
+    "text": "mutation RegisterMutation(\n  $input: UserRegistrationInput!\n) {\n  userRegistration(input: $input) {\n    user {\n      firstName\n      isRenter\n      lastName\n      normalizedEmail\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "4213d41fb5a7c14c15a459ef3d772abc";
+(node as any).hash = "592649fd18b0bd9e1b952de06d64dc09";
 
 export default node;
