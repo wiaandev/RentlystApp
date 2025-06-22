@@ -1,57 +1,59 @@
 import {
-    Environment,
-    Network,
-    RecordSource, RequestParameters,
-    Store, Variables,
+  Environment,
+  Network,
+  RecordSource,
+  RequestParameters,
+  Store,
+  Variables,
 } from 'relay-runtime';
-import React from "react";
+import React from 'react';
 
 export function useRelayEnv() {
-    const [environment, setEnvironment] = React.useState(() =>
-        createEnvironment()
-    );
-    const [version, setVersion] = React.useState(0);
+  const [environment, setEnvironment] = React.useState(() =>
+    createEnvironment()
+  );
+  const [version, setVersion] = React.useState(0);
 
-    const resetEnvironment = React.useCallback(() => {
-        const newEnvironment = createEnvironment();
-        setEnvironment(newEnvironment);
-        setVersion((prevVersion) => prevVersion + 1);
-    }, [setEnvironment, setVersion]);
+  const resetEnvironment = React.useCallback(() => {
+    const newEnvironment = createEnvironment();
+    setEnvironment(newEnvironment);
+    setVersion((prevVersion) => prevVersion + 1);
+  }, [setEnvironment, setVersion]);
 
-    return {environment, resetEnvironment, version};
+  return {environment, resetEnvironment, version};
 }
 
 function createEnvironment() {
-    function fetchQuery(
-        operation: RequestParameters,
-        variables: Variables,
-    ) {
-        return fetch('https://localhost:5001/graphql', {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'content-type': 'application/json',
-            },
-            body: JSON.stringify({
-                query: operation.text, // GraphQL query string
-                variables,
-            }),
-        }).then(response => {
-            console.log(response);
-            return response.json();
-        });
-    }
-
-    const network = Network.create(
-        fetchQuery
-    );
-
-    const store = new Store(new RecordSource());
-
-    return new Environment({
-        network,
-        store,
+  function fetchQuery(
+    operation: RequestParameters,
+    variables: Variables,
+  ) {
+    return fetch('https://localhost:5001/graphql', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: operation.text, // GraphQL query string
+        variables,
+      }),
+    }).then(response => {
+      console.log(response);
+      return response.json();
     });
+  }
+
+  const network = Network.create(
+    fetchQuery,
+  );
+
+  const store = new Store(new RecordSource());
+
+  return new Environment({
+    network,
+    store,
+  });
 }
 
 // Define a function that fetches the results of an operation (query/mutation/etc)

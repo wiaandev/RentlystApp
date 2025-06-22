@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "relay-compiler --validate && tsc -b && vite build",
     "lint": "eslint .",
+    "fmt": "dprint fmt",
     "preview": "vite preview",
     "relay": "relay-compiler"
   },
@@ -19,6 +20,7 @@
     "@stackworx/react-hook-form-mui": "^0.0.5",
     "@stackworx/react-hook-form-mui-x-date-pickers": "^0.0.1-alpha.6",
     "dayjs": "^1.11.13",
+    "dprint": "^0.50.0",
     "mui-tel-input": "^7.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
