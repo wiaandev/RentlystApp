@@ -6,7 +6,6 @@ import {AuthContextQuery} from "./__generated__/AuthContextQuery.graphql.ts";
 interface AuthContextType {
     authenticated: boolean;
     me: AuthContextQuery['response']['me'];
-
     resetEnvironment(): void;
 }
 
