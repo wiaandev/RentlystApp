@@ -8,7 +8,6 @@ import {graphql, useMutation} from "react-relay";
 import {LoginMutation} from "./__generated__/LoginMutation.graphql.ts";
 import {useAuthContext} from "../Context/AuthContext.tsx";
 // import {Navigate} from "react-router-dom";
-import {useNavigate} from "react-router";
 import {Navigate} from "react-router-dom";
 
 type FormValues = {
@@ -17,8 +16,7 @@ type FormValues = {
 }
 
 export const Login: React.FC = () => {
-    const {authenticated} = useAuthContext();
-    const navigate = useNavigate();
+    const {authenticated, resetEnvironment} = useAuthContext();
     const [mutate] = useMutation<LoginMutation>(graphql`
         mutation LoginMutation($input: LoginInput!){
             login(input: $input){
@@ -36,10 +34,7 @@ export const Login: React.FC = () => {
         mutate({variables: {
             input: data,
             }, onCompleted: () => {
-            if(authenticated)
-            {
-                navigate('/listings')
-            }
+            resetEnvironment();
             }, onError: (err) => {
             console.log(err);
             }})

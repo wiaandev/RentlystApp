@@ -10,6 +10,7 @@ import {useNavigate} from "react-router";
 
 export const Header = () =>  {
     const routeMatches = useRouteMatch(['/register']);
+    const {resetEnvironment} = useAuthContext();
     const navigate = useNavigate();
     const {authenticated, me} = useAuthContext();
     const [mutate] = useMutation<HeaderMutation>(graphql`
@@ -23,7 +24,10 @@ export const Header = () =>  {
     const handleLogout = () => {
         mutate({
             variables: {input: {email: me?.email ?? "", password: ""}},
-            onCompleted:() => navigate('/')
+            onCompleted:() => {
+                resetEnvironment();
+                navigate('/')
+            }
         } );
     };
     return (

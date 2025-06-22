@@ -6,11 +6,15 @@ import {AuthContextQuery} from "./__generated__/AuthContextQuery.graphql.ts";
 interface AuthContextType {
     authenticated: boolean;
     me: AuthContextQuery['response']['me'];
+
+    resetEnvironment(): void;
 }
 
 export const AuthContext = React.createContext<AuthContextType>({
     authenticated: false,
     me: {id: "", email: ""},
+    resetEnvironment: () => {
+    },
 });
 
 export function useAuthContext() {
@@ -19,6 +23,7 @@ export function useAuthContext() {
 
 export const AuthContextController = React.memo(function AuthContextController({
                                                                                    children,
+                                                                                   resetEnvironment
                                                                                }: {
     children: React.ReactNode;
     resetEnvironment: () => void;
@@ -39,8 +44,9 @@ export const AuthContextController = React.memo(function AuthContextController({
         () => ({
             authenticated: !!data.me,
             me: data.me,
+            resetEnvironment,
         }),
-        [data],
+        [data, resetEnvironment],
     );
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
