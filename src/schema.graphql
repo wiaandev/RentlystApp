@@ -186,6 +186,7 @@ type Address implements Node {
   suburb: String!
   city: String!
   province: String!
+  fullAddress: String!
 }
 
 type PropertyExtras {

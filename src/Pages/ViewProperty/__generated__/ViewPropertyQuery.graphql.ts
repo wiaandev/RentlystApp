@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<53b470bdab713381c25b2ccebad6f0a8>>
+ * @generated SignedSource<<d9c0ea64b6510463e61b0912981564ec>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,16 +15,13 @@ export type ViewPropertyQuery$variables = {
 };
 export type ViewPropertyQuery$data = {
   readonly property: {
+    readonly address: {
+      readonly id: string;
+    };
     readonly bathroomAmount: number;
     readonly bedroomAmount: number;
     readonly createdAt: any;
     readonly parkingAmount: number;
-    readonly propertyAddress: {
-      readonly city: string;
-      readonly province: string;
-      readonly streetName: string;
-      readonly streetNumber: string;
-    } | null | undefined;
     readonly propertyExtras: {
       readonly hasFiber: boolean;
       readonly hasFlatlet: boolean;
@@ -164,29 +161,13 @@ v9 = {
 v10 = {
   "alias": null,
   "args": null,
-  "kind": "ScalarField",
-  "name": "city",
-  "storageKey": null
-},
-v11 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "province",
-  "storageKey": null
-},
-v12 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "streetName",
-  "storageKey": null
-},
-v13 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "streetNumber",
+  "concreteType": "Address",
+  "kind": "LinkedField",
+  "name": "address",
+  "plural": false,
+  "selections": [
+    (v8/*: any*/)
+  ],
   "storageKey": null
 };
 return {
@@ -211,21 +192,7 @@ return {
           (v6/*: any*/),
           (v7/*: any*/),
           (v9/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Address",
-            "kind": "LinkedField",
-            "name": "propertyAddress",
-            "plural": false,
-            "selections": [
-              (v10/*: any*/),
-              (v11/*: any*/),
-              (v12/*: any*/),
-              (v13/*: any*/)
-            ],
-            "storageKey": null
-          }
+          (v10/*: any*/)
         ],
         "storageKey": null
       }
@@ -254,22 +221,7 @@ return {
           (v6/*: any*/),
           (v7/*: any*/),
           (v9/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Address",
-            "kind": "LinkedField",
-            "name": "propertyAddress",
-            "plural": false,
-            "selections": [
-              (v10/*: any*/),
-              (v11/*: any*/),
-              (v12/*: any*/),
-              (v13/*: any*/),
-              (v8/*: any*/)
-            ],
-            "storageKey": null
-          },
+          (v10/*: any*/),
           (v8/*: any*/)
         ],
         "storageKey": null
@@ -277,16 +229,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "64135da7d53d48fe0478ff793b4b20e7",
+    "cacheID": "66ff593baed31c0210f763094b96f081",
     "id": null,
     "metadata": {},
     "name": "ViewPropertyQuery",
     "operationKind": "query",
-    "text": "query ViewPropertyQuery(\n  $id: ID!\n) {\n  property(propertyId: $id) {\n    propertyType\n    createdAt\n    parkingAmount\n    weeklyAmount\n    bathroomAmount\n    bedroomAmount\n    propertyExtras {\n      id\n      hasPatio\n      hasGarden\n      petsAllowed\n      hasFlatlet\n      hasPool\n      hasFiber\n    }\n    propertyAddress {\n      city\n      province\n      streetName\n      streetNumber\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query ViewPropertyQuery(\n  $id: ID!\n) {\n  property(propertyId: $id) {\n    propertyType\n    createdAt\n    parkingAmount\n    weeklyAmount\n    bathroomAmount\n    bedroomAmount\n    propertyExtras {\n      id\n      hasPatio\n      hasGarden\n      petsAllowed\n      hasFlatlet\n      hasPool\n      hasFiber\n    }\n    address {\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "3bb4f1855ccf44524072eb1b9f034da5";
+(node as any).hash = "7368d87c00a6695ae97367973aa64acf";
 
 export default node;
