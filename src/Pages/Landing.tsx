@@ -80,7 +80,7 @@ export function Landing() {
         {/*<p>{JSON.stringify(meQuery.me, null, 0)}</p>*/}
         <img src={Logo} alt={'logo'} />
         <Grid2 size={12} mb={5}>
-          <Typography variant='h1'>Welcome to Rentro.</Typography>
+          <Typography variant='h1'>Welcome to Rentlyst.</Typography>
           <Typography variant={'subtitle2'}>
             This is a platform for renting your home
           </Typography>
