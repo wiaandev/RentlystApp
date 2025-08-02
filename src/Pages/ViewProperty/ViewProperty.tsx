@@ -1,4 +1,4 @@
-import {Divider, Typography, Grid2} from '@mui/material';
+import {Divider, Grid2, Typography} from '@mui/material';
 import {useParams} from 'react-router';
 import {graphql, useLazyLoadQuery} from 'react-relay';
 import {ViewPropertyQuery} from './__generated__/ViewPropertyQuery.graphql.ts';
@@ -39,12 +39,17 @@ export const ViewProperty = () => {
 
   return (
     <Grid2>
-      <Typography variant={"h1"}>
-        {data.propertyById.bedroomAmount} bedroom {data.propertyById.propertyType.toLocaleLowerCase()}
+      <Typography variant={'h1'}>
+        {data.propertyById.bedroomAmount} bedroom{' '}
+        {data.propertyById.propertyType.toLocaleLowerCase()}
       </Typography>
-        <Pin/>
-        <Typography variant={'body1'}>R {data.propertyById.address.fullAddress}</Typography>
-      <Typography variant={'body1'}>R {data.propertyById.weeklyAmount} / week</Typography>
+      <Pin />
+      <Typography variant={'body1'}>
+        R {data.propertyById.address.fullAddress}
+      </Typography>
+      <Typography variant={'body1'}>
+        R {data.propertyById.weeklyAmount} / week
+      </Typography>
       <Typography variant={'body2'}>Per week</Typography>
       <Divider />
       <Typography variant={'body2'}>

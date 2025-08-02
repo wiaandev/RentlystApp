@@ -141,7 +141,11 @@ export const Register = () => {
                 value === form.getValues().password || 'Passwords do not match',
             }}
           />
-          <CheckboxWithLabel control={form.control} label='I want to list my place' name='isRenter' />
+          <CheckboxWithLabel
+            control={form.control}
+            label='I want to list my place'
+            name='isRenter'
+          />
         </Grid2>
         <Button type={'submit'} variant={'contained'}>
           Submit
