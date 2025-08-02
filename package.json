@@ -21,6 +21,7 @@
     "@stackworx/react-hook-form-mui-x-date-pickers": "^0.0.1-alpha.6",
     "dayjs": "^1.11.13",
     "dprint": "^0.50.0",
+    "framer-motion": "^12.23.12",
     "gsap": "^3.13.0",
     "mui-tel-input": "^7.0.0",
     "react": "^18.3.1",

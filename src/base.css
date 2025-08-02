@@ -1,0 +1,8 @@
+/* Colors to use for react bit components from MUI */
+:root {
+  --color-primary-main: #1d1b19;
+  --color-secondary-main: #fe300b;
+  --color-bg-default: #faf5f1;
+  --color-bg-paper: #e1ddd9;
+  --color-text-primary: #1d1b19;
+}
