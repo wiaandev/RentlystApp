@@ -86,14 +86,6 @@ export function Landing() {
       </Grid2>
 
       <Grid2 size={4} container justifyContent={'center'} alignItems={'center'}>
-        {/*<Box display='flex'*/}
-        {/*     flexDirection={'column'}*/}
-        {/*     overflow={'auto'}*/}
-        {/*     sx={{objectFit: 'cover'}}*/}
-        {/*     borderRadius={10}*/}
-        {/*     component={"img"} src={LandingImage} flex={1} position={'relative'} minHeight={'100%'}*/}
-        {/*     height={'100vh'}/>*/}
-
         <Masonry
           items={items}
           ease='power3.out'
@@ -105,22 +97,6 @@ export function Landing() {
           blurToFocus={true}
           colorShiftOnHover={false}
         />
-
-        {
-          /* <ImageList variant='masonry' cols={2} gap={8}>
-          {itemData.map((item) => (
-            <ImageListItem key={item.img}>
-              <img
-                srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                src={`${item.img}?w=248&fit=crop&auto=format`}
-                alt={item.title}
-                loading='lazy'
-                style={{borderRadius: '10px'}}
-              />
-            </ImageListItem>
-          ))}
-        </ImageList> */
-        }
       </Grid2>
     </Grid2>
   );
