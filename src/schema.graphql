@@ -1,137 +1,68 @@
-type Query {
-  """
-  Fetches an object given its ID.
-  """
-  node(
-    """
-    ID of the object.
-    """
-    id: ID!
-  ): Node
-
-  """
-  Lookup nodes by a list of IDs.
-  """
-  nodes(
-    """
-    The list of node IDs.
-    """
-    ids: [ID!]!
-  ): [Node]!
-  properties(
-    """
-    Returns the first _n_ elements from the list.
-    """
-    first: Int
-
-    """
-    Returns the elements in the list that come after the specified cursor.
-    """
-    after: String
-
-    """
-    Returns the last _n_ elements from the list.
-    """
-    last: Int
-
-    """
-    Returns the elements in the list that come before the specified cursor.
-    """
-    before: String
-  ): PropertyPostConnection
-  propertiesByUserId(userId: ID!): [PropertyPost!]!
-  property(propertyId: ID!): PropertyPost!
-  users: [User!]!
-  me: User
+schema {
+  query: Query
+  mutation: Mutation
 }
 
-type Mutation {
-  login(input: LoginInput!): LoginPayload!
-  logout(input: LogoutInput!): LogoutPayload!
-  userRegistration(input: UserRegistrationInput!): UserRegistrationPayload!
-}
-
-"""
-The node interface is implemented by entities that have a global unique identifier.
-"""
+"The node interface is implemented by entities that have a global unique identifier."
 interface Node {
   id: ID!
 }
 
-"""
-A local date and time in a particular calendar system, combined with an offset from UTC.
-"""
-scalar OffsetDateTime
-
-"""
-LocalDate is an immutable struct representing a date within the calendar, with no reference to a particular time zone or time of day.
-"""
-scalar LocalDate
-
-"""
-LocalTime is an immutable struct representing a time of day, with no reference to a particular calendar, time zone or date.
-"""
-scalar LocalTime
-
-"""
-The `Upload` scalar type represents a file upload.
-"""
-scalar Upload
-
-enum ApplyPolicy {
-  BEFORE_RESOLVER
-  AFTER_RESOLVER
-  VALIDATION
+type Address implements Node {
+  id: ID!
+  property: PropertyPost!
+  propertyPostId: Int!
+  streetName: String!
+  streetNumber: String!
+  suburb: String!
+  city: String!
+  province: String!
+  fullAddress: String! @cost(weight: "10")
 }
 
-"""
-A connection to a list of items.
-"""
-type PropertyPostConnection {
-  """
-  Information to aid in pagination.
-  """
-  pageInfo: PageInfo!
-
-  """
-  A list of edges.
-  """
-  edges: [PropertyPostEdge!]
-
-  """
-  A flattened list of the nodes.
-  """
-  nodes: [PropertyPost!]
-
-  """
-  Identifies the total count of items in the connection.
-  """
-  totalCount: Int!
+type AdminUser {
+  id: ID!
+  user: User!
+  userId: Int!
 }
 
-"""
-Information about pagination in a connection.
-"""
+type LoginPayload {
+  user: User
+}
+
+type LogoutPayload {
+  boolean: Boolean
+}
+
+type Mutation {
+  login(input: LoginInput!): LoginPayload! @cost(weight: "10")
+  logout(input: LogoutInput!): LogoutPayload! @cost(weight: "10")
+  userRegistration(input: UserRegistrationInput!): UserRegistrationPayload!
+    @cost(weight: "10")
+}
+
+"Information about pagination in a connection."
 type PageInfo {
-  """
-  Indicates whether more edges exist following the set defined by the clients arguments.
-  """
+  "Indicates whether more edges exist following the set defined by the clients arguments."
   hasNextPage: Boolean!
-
-  """
-  Indicates whether more edges exist prior the set defined by the clients arguments.
-  """
+  "Indicates whether more edges exist prior the set defined by the clients arguments."
   hasPreviousPage: Boolean!
-
-  """
-  When paginating backwards, the cursor to continue.
-  """
+  "When paginating backwards, the cursor to continue."
   startCursor: String
-
-  """
-  When paginating forwards, the cursor to continue.
-  """
+  "When paginating forwards, the cursor to continue."
   endCursor: String
+}
+
+type PropertyExtras {
+  id: ID!
+  propertyPostId: Int!
+  property: PropertyPost!
+  hasFiber: Boolean!
+  petsAllowed: Boolean!
+  hasPool: Boolean!
+  hasGarden: Boolean!
+  hasPatio: Boolean!
+  hasFlatlet: Boolean!
 }
 
 type PropertyPost implements Node {
@@ -147,77 +78,57 @@ type PropertyPost implements Node {
   petType: [AllowedPetType!]
   createdAt: DateTime!
   address: Address!
-  propertyExtras: PropertyExtras
-  propertyAddress: Address
+  propertyExtras: PropertyExtras @cost(weight: "10")
+  propertyAddress: Address @cost(weight: "10")
 }
 
-"""
-An edge in a connection.
-"""
-type PropertyPostEdge {
-  """
-  A cursor for use in pagination.
-  """
-  cursor: String!
+"A connection to a list of items."
+type PropertyPostConnection {
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  "A list of edges."
+  edges: [PropertyPostEdge!]
+  "A flattened list of the nodes."
+  nodes: [PropertyPost!]
+  "Identifies the total count of items in the connection."
+  totalCount: Int! @cost(weight: "10")
+}
 
-  """
-  The item at the end of the edge.
-  """
+"An edge in a connection."
+type PropertyPostEdge {
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
   node: PropertyPost!
 }
 
-"""
-The `DateTime` scalar represents an ISO-8601 compliant date time type.
-"""
-scalar DateTime @specifiedBy(url: "https://www.graphql-scalars.com/date-time")
-
-enum AllowedPetType {
-  DOG
-  CAT
-  BIRD
-}
-
-type Address implements Node {
-  id: ID!
-  property: PropertyPost!
-  propertyPostId: Int!
-  streetName: String!
-  streetNumber: String!
-  suburb: String!
-  city: String!
-  province: String!
-  fullAddress: String!
-}
-
-type PropertyExtras {
-  id: ID!
-  propertyPostId: Int!
-  property: PropertyPost!
-  hasFiber: Boolean!
-  petsAllowed: Boolean!
-  hasPool: Boolean!
-  hasGarden: Boolean!
-  hasPatio: Boolean!
-  hasFlatlet: Boolean!
-}
-
-enum RentType {
-  APARTMENT
-  HOUSE
-  FLAT
-  PLOT
-  DUPLEX
-  TOWNHOUSE
-}
-
-input UserRegistrationRequestInput {
-  firstName: String!
-  lastName: String!
-  email: String!
-  isRenter: Boolean!
-  password: String!
-  confirmPassword: String!
-  phoneNumber: String!
+type Query {
+  "Fetches an object given its ID."
+  node("ID of the object." id: ID!): Node @cost(weight: "10")
+  "Lookup nodes by a list of IDs."
+  nodes("The list of node IDs." ids: [ID!]!): [Node]! @cost(weight: "10")
+  properties(
+    "Returns the first _n_ elements from the list."
+    first: Int
+    "Returns the elements in the list that come after the specified cursor."
+    after: String
+    "Returns the last _n_ elements from the list."
+    last: Int
+    "Returns the elements in the list that come before the specified cursor."
+    before: String
+  ): PropertyPostConnection
+    @authorize
+    @listSize(
+      assumedSize: 20
+      slicingArguments: ["first", "last"]
+      slicingArgumentDefaultValue: 20
+      sizedFields: ["edges", "nodes"]
+    )
+    @cost(weight: "10")
+  propertyById(propertyId: ID!): PropertyPost! @cost(weight: "10")
+  users: [User!]! @cost(weight: "10")
+  me: User @cost(weight: "10")
+  userById(userId: ID!): User @cost(weight: "10")
 }
 
 type User implements Node {
@@ -242,12 +153,13 @@ type User implements Node {
   lockoutEnd: DateTime
   lockoutEnabled: Boolean!
   accessFailedCount: Int!
+  propertyPosts: [PropertyPost!]!
+    @authorize(roles: ["Seller"])
+    @cost(weight: "10")
 }
 
-type AdminUser {
-  id: ID!
-  user: User!
-  userId: Int!
+type UserRegistrationPayload {
+  user: User
 }
 
 input LoginInput {
@@ -255,23 +167,91 @@ input LoginInput {
   password: String!
 }
 
-type LoginPayload {
-  user: User
-}
-
 input LogoutInput {
   email: String!
   password: String!
-}
-
-type LogoutPayload {
-  boolean: Boolean
 }
 
 input UserRegistrationInput {
   input: UserRegistrationRequestInput!
 }
 
-type UserRegistrationPayload {
-  user: User
+input UserRegistrationRequestInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  isRenter: Boolean!
+  password: String!
+  confirmPassword: String!
+  phoneNumber: String!
 }
+
+enum AllowedPetType {
+  DOG
+  CAT
+  BIRD
+}
+
+"Defines when a policy shall be executed."
+enum ApplyPolicy {
+  "Before the resolver was executed."
+  BEFORE_RESOLVER
+  "After the resolver was executed."
+  AFTER_RESOLVER
+  "The policy is applied in the validation step before the execution."
+  VALIDATION
+}
+
+enum RentType {
+  APARTMENT
+  HOUSE
+  FLAT
+  PLOT
+  DUPLEX
+  TOWNHOUSE
+}
+
+"The authorize directive."
+directive @authorize(
+  "The name of the authorization policy that determines access to the annotated resource."
+  policy: String
+  "Roles that are allowed to access the annotated resource."
+  roles: [String!]
+  "Defines when when the authorize directive shall be applied.By default the authorize directives are applied during the validation phase."
+  apply: ApplyPolicy! = BEFORE_RESOLVER
+) repeatable on OBJECT | FIELD_DEFINITION
+
+"The purpose of the `cost` directive is to define a `weight` for GraphQL types, fields, and arguments. Static analysis can use these weights when calculating the overall cost of a query or response."
+directive @cost(
+  "The `weight` argument defines what value to add to the overall cost for every appearance, or possible appearance, of a type, field, argument, etc."
+  weight: String!
+) on SCALAR | OBJECT | FIELD_DEFINITION | ARGUMENT_DEFINITION | ENUM | INPUT_FIELD_DEFINITION
+
+"The purpose of the `@listSize` directive is to either inform the static analysis about the size of returned lists (if that information is statically available), or to point the analysis to where to find that information."
+directive @listSize(
+  "The `assumedSize` argument can be used to statically define the maximum length of a list returned by a field."
+  assumedSize: Int
+  "The `slicingArguments` argument can be used to define which of the field's arguments with numeric type are slicing arguments, so that their value determines the size of the list returned by that field. It may specify a list of multiple slicing arguments."
+  slicingArguments: [String!]
+  "The `slicingArgumentDefaultValue` argument can be used to define a default value for a slicing argument, which is used if the argument is not present in a query."
+  slicingArgumentDefaultValue: Int
+  "The `sizedFields` argument can be used to define that the value of the `assumedSize` argument or of a slicing argument does not affect the size of a list returned by a field itself, but that of a list returned by one of its sub-fields."
+  sizedFields: [String!]
+  "The `requireOneSlicingArgument` argument can be used to inform the static analysis that it should expect that exactly one of the defined slicing arguments is present in a query. If that is not the case (i.e., if none or multiple slicing arguments are present), the static analysis may throw an error."
+  requireOneSlicingArgument: Boolean! = true
+) on FIELD_DEFINITION
+
+"The `@specifiedBy` directive is used within the type system definition language to provide a URL for specifying the behavior of custom scalar definitions."
+directive @specifiedBy(
+  "The specifiedBy URL points to a human-readable specification. This field will only read a result for scalar types."
+  url: String!
+) on SCALAR
+
+"The `DateTime` scalar represents an ISO-8601 compliant date time type."
+scalar DateTime @specifiedBy(url: "https://www.graphql-scalars.com/date-time")
+
+"The `TimeSpan` scalar represents an ISO-8601 compliant duration type."
+scalar TimeSpan
+
+"The `Upload` scalar type represents a file upload."
+scalar Upload
