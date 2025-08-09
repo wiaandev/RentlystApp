@@ -34,11 +34,40 @@ type LogoutPayload {
   boolean: Boolean
 }
 
+type Me implements Node {
+  user: User
+  firstName: String!
+  lastName: String!
+  isDeleted: Boolean!
+  adminUser: AdminUser
+  isRenter: Boolean!
+  properties: [PropertyPost!]!
+  id: ID!
+  userName: String
+  normalizedUserName: String
+  email: String
+  normalizedEmail: String
+  emailConfirmed: Boolean!
+  passwordHash: String
+  securityStamp: String
+  concurrencyStamp: String
+  phoneNumber: String
+  phoneNumberConfirmed: Boolean!
+  twoFactorEnabled: Boolean!
+  lockoutEnd: DateTime
+  lockoutEnabled: Boolean!
+  accessFailedCount: Int!
+  propertyPosts: [PropertyPost!]!
+  @authorize(roles: ["Seller"])
+  @cost(weight: "10")
+  rolesUserNotMe: [String!]! @cost(weight: "10")
+}
+
 type Mutation {
   login(input: LoginInput!): LoginPayload! @cost(weight: "10")
   logout(input: LogoutInput!): LogoutPayload! @cost(weight: "10")
   userRegistration(input: UserRegistrationInput!): UserRegistrationPayload!
-    @cost(weight: "10")
+  @cost(weight: "10")
 }
 
 "Information about pagination in a connection."
@@ -68,7 +97,7 @@ type PropertyExtras {
 type PropertyPost implements Node {
   id: ID!
   propertyType: RentType!
-  sellerId: Int!
+  sellerId: ID!
   seller: User!
   weeklyAmount: Int!
   bedroomAmount: Int!
@@ -117,17 +146,17 @@ type Query {
     "Returns the elements in the list that come before the specified cursor."
     before: String
   ): PropertyPostConnection
-    @authorize
-    @listSize(
-      assumedSize: 20
-      slicingArguments: ["first", "last"]
-      slicingArgumentDefaultValue: 20
-      sizedFields: ["edges", "nodes"]
-    )
-    @cost(weight: "10")
+  @authorize
+  @listSize(
+    assumedSize: 20
+    slicingArguments: ["first", "last"]
+    slicingArgumentDefaultValue: 20
+    sizedFields: ["edges", "nodes"]
+  )
+  @cost(weight: "10")
   propertyById(propertyId: ID!): PropertyPost! @cost(weight: "10")
   users: [User!]! @cost(weight: "10")
-  me: User @cost(weight: "10")
+  me: Me @cost(weight: "10")
   userById(userId: ID!): User @cost(weight: "10")
 }
 
@@ -154,8 +183,9 @@ type User implements Node {
   lockoutEnabled: Boolean!
   accessFailedCount: Int!
   propertyPosts: [PropertyPost!]!
-    @authorize(roles: ["Seller"])
-    @cost(weight: "10")
+  @authorize(roles: ["Seller"])
+  @cost(weight: "10")
+  rolesUserNotMe: [String!]! @cost(weight: "10")
 }
 
 type UserRegistrationPayload {

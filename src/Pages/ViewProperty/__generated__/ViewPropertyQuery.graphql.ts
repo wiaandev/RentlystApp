@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4c4fe743d76574ee4da70863a762e66f>>
+ * @generated SignedSource<<e5bb8a299a9d2b650d8a8a459298282b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,7 +18,6 @@ export type ViewPropertyQuery$data = {
     readonly address: {
       readonly fullAddress: string;
       readonly id: string;
-      readonly streetNumber: string;
     };
     readonly bathroomAmount: number;
     readonly bedroomAmount: number;
@@ -173,13 +172,6 @@ v10 = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "streetNumber",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "fullAddress",
       "storageKey": null
     }
@@ -245,16 +237,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "73dcc3daa87048cac7e65f95c1ee2bb8",
+    "cacheID": "adeb4deb24d2944a9c00de6005789aca",
     "id": null,
     "metadata": {},
     "name": "ViewPropertyQuery",
     "operationKind": "query",
-    "text": "query ViewPropertyQuery(\n  $id: ID!\n) {\n  propertyById(propertyId: $id) {\n    propertyType\n    createdAt\n    parkingAmount\n    weeklyAmount\n    bathroomAmount\n    bedroomAmount\n    propertyExtras {\n      id\n      hasPatio\n      hasGarden\n      petsAllowed\n      hasFlatlet\n      hasPool\n      hasFiber\n    }\n    address {\n      id\n      streetNumber\n      fullAddress\n    }\n    id\n  }\n}\n"
+    "text": "query ViewPropertyQuery(\n  $id: ID!\n) {\n  propertyById(propertyId: $id) {\n    propertyType\n    createdAt\n    parkingAmount\n    weeklyAmount\n    bathroomAmount\n    bedroomAmount\n    propertyExtras {\n      id\n      hasPatio\n      hasGarden\n      petsAllowed\n      hasFlatlet\n      hasPool\n      hasFiber\n    }\n    address {\n      id\n      fullAddress\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "d4c09c9d1588fab5b30a4439bf04ec4e";
+(node as any).hash = "0df071903130125007569f7b3b2d9e53";
 
 export default node;

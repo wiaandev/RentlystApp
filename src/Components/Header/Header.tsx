@@ -78,7 +78,7 @@ export const Header = () => {
         {authenticated ? (
           <>
             <RouterLink>
-              <Avatar sx={{ bgcolor: deepOrange[500] }}>
+              <Avatar sx={{ bgcolor: deepOrange[500] }} onClick={() => navigate(`/profile/${me?.id}`)}>
                 {me?.email?.charAt(0)}
               </Avatar>
             </RouterLink>

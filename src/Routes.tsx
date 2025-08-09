@@ -15,6 +15,7 @@ import {Register} from './Pages/Register.tsx';
 import {PropertyListings} from './Pages/PropertyListings/PropertyListings.tsx';
 import {ViewProperty} from './Pages/ViewProperty/ViewProperty.tsx';
 import {AuthContext} from './Context/AuthContext.tsx';
+import {Profile} from "./Pages/Profile/Profile.tsx";
 // import {AuthContext} from "./Context/AuthContext.tsx";
 
 interface Props {
@@ -49,6 +50,14 @@ const router = (_relayEnv: IEnvironment) => {
                   <ViewProperty />
                 </AuthBlocker>
               }
+            />
+            <Route
+                path={'/profile/:id'}
+                element={
+                  <AuthBlocker>
+                    <Profile />
+                  </AuthBlocker>
+                }
             />
           </Route>
         </Route>

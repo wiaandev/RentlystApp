@@ -4,9 +4,11 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { Header } from "../Components/Header/Header.tsx";
 import Dock from "../Components/Dock/Dock.tsx";
 import { Dashboard, House, Person } from "@mui/icons-material";
+import {useAuthContext} from "../Context/AuthContext.tsx";
 
 export const RootLayout: React.FC = () => {
   const navigate = useNavigate();
+  const { me } = useAuthContext();
   const items = [
     { icon: <Dashboard />, label: "Home", onClick: () => navigate('/')},
     {
@@ -17,7 +19,7 @@ export const RootLayout: React.FC = () => {
     {
       icon: <Person />,
       label: "Profile",
-      onClick: () => navigate('profile'),
+      onClick: () => navigate(`profile/${me?.id}`),
     },
   ];
 
